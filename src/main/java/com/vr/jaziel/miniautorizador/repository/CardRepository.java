@@ -7,6 +7,8 @@ import org.springframework.data.repository.query.Param;
 import com.vr.jaziel.model.CardModel;
 
 public interface CardRepository extends CrudRepository<CardModel, Long> {
+    @Query("SELECT * FROM cards WHERE numero_cartao = :numeroCartao")
+    CardModel findByNumeroCartao(String numeroCartao);
 
     @Query("select saldo from cards where numero_cartao = :numeroCartao")
     Double getBalance(@Param("numeroCartao") String numeroCartao);
