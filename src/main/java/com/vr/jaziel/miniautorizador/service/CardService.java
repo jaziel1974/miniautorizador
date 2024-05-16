@@ -15,6 +15,11 @@ public class CardService {
     }
 
     public CardDto createCard(CardModel card) {
+        card.setSaldo(500.0);
         return CardDto.fromCard(cardRepository.save(card));
+    }
+
+    public Double getBalance(String numeroCartao) {
+        return cardRepository.getBalance(numeroCartao);
     }
 }

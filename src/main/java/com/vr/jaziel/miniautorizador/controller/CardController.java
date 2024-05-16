@@ -40,5 +40,12 @@ public class CardController {
 
     @GetMapping("/{numeroCartao}")
     public Double getBalance(@PathVariable String numeroCartao) {
-        return 500.0;
-    }}
+
+        Double balance = cardService.getBalance(numeroCartao);
+        if (balance != null) {
+            return balance;
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+}

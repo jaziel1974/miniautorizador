@@ -14,4 +14,5 @@ public class CardModel {
     @Column("numero_cartao")
     private String numeroCartao;
     private String senha;
+    private Double saldo;
 }

@@ -48,7 +48,22 @@ public class CardControllerTest {
 
     @Test
     void getBalanceWithSuccess() {
-        Double balance = testRestTemplate.getForObject("/cartoes/123456703", Double.class);
-        assertEquals(500.0, balance);
+        CardDto cardDto = new CardDto();
+        cardDto.setNumeroCartao("123456703");
+        cardDto.setSenha("1234");
+
+        ResponseEntity<CardDto> response = testRestTemplate.exchange("/cartoes", HttpMethod.POST,
+                new HttpEntity<>(cardDto), CardDto.class);
+        assertEquals(response.getStatusCode(), HttpStatus.CREATED);
+
+        ResponseEntity<Double> response2 = testRestTemplate.exchange("/cartoes/123456703", HttpMethod.GET, null, Double.class);
+        assertEquals(response2.getStatusCode(), HttpStatus.OK);
+        assertEquals(500.0, response2.getBody());
+    }
+
+    @Test
+    void getBalanceFail_CardNotFound() {
+        ResponseEntity<String> response2 = testRestTemplate.exchange("/cartoes/123456704", HttpMethod.GET, null, String.class);
+        assertEquals(HttpStatus.NOT_FOUND, response2.getStatusCode());
     }
 }
