@@ -3,6 +3,7 @@ package com.vr.jaziel.miniautorizador.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ public class TransactionController {
     private ApprovalService approvalService;
 
     @PostMapping()
+    @Transactional
     public ResponseEntity<String> create(@RequestBody TransactionDto transactionDto) {
         try {
             approvalService.approveTransaction(transactionDto);

@@ -28,12 +28,12 @@ public class CardController {
             CardDto savedCard = cardService.createCard(CardDto.toCard(cardDto));
             return new ResponseEntity<CardDto>(savedCard, HttpStatus.CREATED);
         } catch (Exception e) {
-            if (e.getCause() instanceof DuplicateKeyException err) {
+            if (e.getCause() instanceof DuplicateKeyException) {
                 ResponseEntity<CardDto> response = new ResponseEntity<CardDto>(cardDto,
                         HttpStatus.UNPROCESSABLE_ENTITY);
                 return response;
             } else {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
             }
         }
     }
